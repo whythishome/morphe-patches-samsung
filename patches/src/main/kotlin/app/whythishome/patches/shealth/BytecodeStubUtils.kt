@@ -29,6 +29,16 @@ internal fun BytecodePatchContext.stubZeroReturnIfPresent(fingerprint: Fingerpri
     runCatching { stubZeroReturn(fingerprint, returnObject) }
 }
 
+/** Replace a primitive boolean method with a constant result. */
+internal fun BytecodePatchContext.stubBooleanReturnIfPresent(fingerprint: Fingerprint, value: Boolean) {
+    runCatching {
+        replaceMethodBody(
+            fingerprint,
+            "const/4 v0, 0x${if (value) 1 else 0}\nreturn v0",
+        )
+    }
+}
+
 internal fun BytecodePatchContext.stubReturnVoid(fingerprint: Fingerprint) {
     replaceMethodBody(fingerprint, "return-void")
 }

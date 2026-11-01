@@ -20,6 +20,8 @@ val showHealthSharingOnNonSamsungPatch = bytecodePatch(
     execute {
         // Keep this fail-soft because the class is obfuscated and older Health
         // releases may not contain the same My Page gate.
-        stubZeroReturnIfPresent(HealthSharingIsSamsungDeviceFingerprint, returnObject = true)
+        // h() returns primitive boolean (Z); return true to pass the
+        // manufacturer gate. Using return-object here causes VerifyError.
+        stubBooleanReturnIfPresent(HealthSharingIsSamsungDeviceFingerprint, value = true)
     }
 }

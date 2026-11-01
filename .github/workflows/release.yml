@@ -31,7 +31,7 @@ jobs:
       - name: Build patch bundle and patch list
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash ./gradlew :patches:buildAndroid generatePatchesList --no-daemon
+        run: bash ./gradlew clean :patches:buildAndroid generatePatchesList --no-daemon
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
